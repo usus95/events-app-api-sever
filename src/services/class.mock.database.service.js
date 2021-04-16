@@ -164,6 +164,27 @@ class MockDatabaseService {
         const dateParts = date.split('/');
         return `${dateParts[0].padStart(2, '0')}/${dateParts[1].padStart(2, '0')}/${dateParts[2]}`;
     }
+    async incLikes(id, returnEvents=true){
+        let {event} = await this.getEventById(id);
+        if(!event.likes) {
+            event.likes = 1;
+        } else {
+            event.likes++;
+        }
+        return this.updateEvent(id, event, returnEvents);
+    }
+
+    async incDisLikes(id, returnEvents=true){
+        let {event} = await this.getEventById(id);
+        if(!event.dislikes) {
+            event.dislikes = 1;
+        } else {
+            event.dislikes++;    
+        }
+        return this.updateEvent(id, event, returnEvents);
+    }
+
+
 }
 
 module.exports = MockDatabaseService;
